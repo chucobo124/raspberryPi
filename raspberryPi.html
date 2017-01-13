@@ -33,21 +33,34 @@ class: center, middle
 1. Raspberry Pi Overview
 2. Linux Overview
 3. Python Http Server
-
+---
+# Raspberry Pi Overview
 ---
 
 # Raspberry Pi Overview
   - Stroy
     - 單板電腦
+
+      單板機，將計算機的各個部分都組裝在一塊印製電路板上，包括微處理器/存儲器/輸入輸出接口，還有簡單的七段發光二極體顯示器、小鍵盤、插座等其他外部設備。功能比單片機強，適於進行生產過程的控制。可以直接在實驗板上操作，適用於教學。
+
   - Use Case
     - Solar Tracker
     - Coffee Machine
   - GPIO
-
 ---
-
+# Raspberry Pi Overview
+相關單板電腦
+- Latte Panda
+- Banana Pi
+- Orange Pi
+- What every Pi
+- intel 伽利略
+- [Nvidia 嵌入式電腦](http://www.nvidia.com/object/tegra.html)
+---
 # Linux
   - Story
+    [族譜](http://www.admin10000.com/document/887.html)
+  - About Virtual Box
   - Command line
     - Structure
     - apt-get
@@ -56,10 +69,94 @@ class: center, middle
     - vim learning
 
 ---
-
 # Python Simple Web Server
   - Overview
+    - Apache
+    - Database
+    - Backend
+    - Browser
   - apt-get install lighttpd
+---
+# RaspberyPi Learning
+  - Led Control
+  ```python
+  try:
+    import RPi.GPIO as GPIO
+    except RuntimeError:
+        print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
+    import time
+    import atexit
+
+    def exit_handler():
+        GPIO.cleanup()
+
+    atexit.register(exit_handler)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(3, GPIO.OUT)
+
+    loop = True
+    while loop == True:
+        GPIO.output(3, GPIO.HIGH)
+        time.sleep(2)
+        GPIO.output(3, GPIO.LOW)
+        time.sleep(2)
+  ```
+---
+  - PWM Control
+  ```python
+  try:
+    import RPi.GPIO as GPIO
+    except RuntimeError:
+        print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
+    import time
+    import atexit
+
+    def exit_handler():
+        GPIO.cleanup()
+
+    atexit.register(exit_handler)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(3, GPIO.OUT)
+    led3 = GPIO.PWM(3,50)
+    led3.start(1)
+    loop = True
+    try:
+      while loop == True:
+          for dc in range(0,101,5):
+              led3.ChangeDutyCycle(dc)
+              time.sleep(0.01)
+          for dc in range(100,-1,-5):
+              led3.ChangeDutyCycle(dc)
+              time.sleep(0.01)
+  ```
+---
+# RaspberryPi Learning
+  - Json Practice
+  ```python
+  import urllib
+  import json
+
+  url='http://opendata.epa.gov.tw/ws/Data/UV/?$orderby=PublishAgency&$skip=0&$top=1000&format=json'
+  result = json.load(urllib.urlopen(url))
+  print result
+  ```
+---
+# RaspberryPi Learning
+  - [lighttpd + python](https://mike632t.wordpress.com/2013/09/21/installing-lighttpd-with-python-cgi-support/)
+---
+#Ruby
+ - install rbenv
+ [totorial](http://www.iconoclastlabs.com/blog/ruby-on-rails-on-the-raspberry-pi-b-with-rbenv)
+ ```
+   $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+   $ sudo apt-get install -y openssl libreadline6-dev git-core zlib1g libssl-dev
+   $ sudo apt-get install -y libyaml-dev libsqlite3-dev sqlite3
+   $ sudo apt-get install -y libxml2-dev libxslt-dev
+   $ sudo apt-get install -y autoconf automake libtool bison
+ ```
+---
+
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>

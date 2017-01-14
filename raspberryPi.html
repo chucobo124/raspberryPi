@@ -13,7 +13,10 @@
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code, .remark-inline-code {
+        font-size: 1em;
+        font-family: 'Ubuntu Mono';
+      }
     </style>
   </head>
   <body>
@@ -27,7 +30,6 @@ class: center, middle
 
 
 ---
-
 # Agenda
 
 1. Raspberry Pi Overview
@@ -104,9 +106,47 @@ iface wlan0 inet dhcp
     - Browser
   - apt-get install lighttpd
   ```shell
+   sudo python -m SimpleHTTPServer 80
    sudo adduser pi www-data
    sudo chown -R www-data:www-data   /var/www
    sudo chmod -R 775 /var/www
+  ```
+---
+# CGI Server
+```
+#!/usr/bin/env python
+
+import BaseHTTPServer
+import CGIHTTPServer
+import cgitb; cgitb.enable()  ## This line enables CGI error reporting
+
+server = BaseHTTPServer.HTTPServer
+handler = CGIHTTPServer.CGIHTTPRequestHandler
+server_address = ("", 8000)
+handler.cgi_directories = ["/"]
+
+httpd = server(server_address, handler)
+httpd.serve_forever()
+```
+---
+# Python Web
+```
+#!/usr/bin/env python
+
+print "Content-type: text/html"
+print
+print "<title>Test CGI</title>"
+print "<p>Hello World!</p>"
+```
+---
+  ```shell
+  # vi ~/.vimrc
+  syntax on
+  set nu
+  set expandtab
+  set tabstop=4
+  # set nocompatible
+  # set backespece=2
   ```
 ---
 # Simple web

@@ -35,9 +35,6 @@ class: center, middle
 3. Python Http Server
 ---
 # Raspberry Pi Overview
----
-
-# Raspberry Pi Overview
   - Stroy
     - 單板電腦
 
@@ -59,14 +56,44 @@ class: center, middle
 ---
 # Linux
   - Story
+
     [族譜](http://www.admin10000.com/document/887.html)
   - About Virtual Box
   - Command line
     - Structure
     - apt-get
     - ls and other command
-  - Vim / Nano
-    - vim learning
+---
+# Linux Network setting
+``` shell
+# list down the ap
+sudo iwlist wlan0 scanning
+
+/etc/wpa_supplicant/wpa_supplicant.conf
+
+network={
+        ssid="HomeChen(2.4G)"
+        psk="Chen23817212"
+        key_mgmt=WPA-PSK
+}
+---
+# /etc/network/interfaces
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+auto wlan0
+
+
+iface wlan0 inet dhcp
+        wpa-ssid "ssid"
+        wpa-psk "password"
+```
+---
+# Vim / Nano
+  - vim learning
 
 ---
 # Python Simple Web Server
@@ -76,6 +103,24 @@ class: center, middle
     - Backend
     - Browser
   - apt-get install lighttpd
+  ```shell
+   sudo adduser pi www-data
+   sudo chown -R www-data:www-data   /var/www
+   sudo chmod -R 775 /var/www
+  ```
+---
+# Simple web
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, world!</title>
+    </head>
+    <body>
+        <h1>Hello, world!</h1>
+    </body>
+</html>
+```
 ---
 # RaspberyPi Learning
   - Led Control
@@ -102,7 +147,7 @@ class: center, middle
         time.sleep(2)
   ```
 ---
-  - PWM Control
+# PWM Control
   ```python
   try:
     import RPi.GPIO as GPIO
@@ -147,7 +192,7 @@ class: center, middle
 #Ruby
  - install rbenv
  [totorial](http://www.iconoclastlabs.com/blog/ruby-on-rails-on-the-raspberry-pi-b-with-rbenv)
- ```
+ ```shell
    $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 
    $ sudo apt-get install -y openssl libreadline6-dev git-core zlib1g libssl-dev
